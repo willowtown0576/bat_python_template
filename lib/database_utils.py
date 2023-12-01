@@ -23,20 +23,21 @@ def connect_to_database(
     connection_str += ';UID=' + username + ';PWD=' + password
     return pyodbc.connect(connection_str)
 
-def execute_sql(cnxn: pyodbc.Connection, query: str) -> List[Any]:
+def execute_sql(cnxn: pyodbc.Connection, query: str, params: Optional[List[Any]] = None) -> Optional[int]:
     """
     与えられたSQLクエリを実行する関数。
 
     パラメータ:
         cnxn (pyodbc.Connection): データベース接続オブジェクト。
         query (str): 実行するSQLクエリ。
+        params (Optional[List[Any]]): SQLクエリに渡すパラメータのリスト。
 
     戻り値:
-        List[Any]: SELECT文の場合はクエリ結果のリスト、それ以外の場合は影響を受けた行数。
+        Optional[int]: SELECT文の場合はクエリ結果のリスト、それ以外の場合は影響を受けた行数。
     """
     cursor: pyodbc.Cursor = cnxn.cursor()
-    cursor.execute(query)
-    
+    cursor.execute(query, params or [])
+
     if cursor.description:
         return [row for row in cursor]
     else:

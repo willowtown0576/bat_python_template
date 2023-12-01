@@ -19,7 +19,8 @@ def main() -> int:
             password='YOUR_PASSWORD'
         )
         query = read_query_from_file('sql/sample.sql')
-        results = execute_sql(cnxn, query)
+        params = []
+        results = execute_sql(cnxn, query, params)
 
         if some_condition:  # ここに具体的な条件を設定
             warnings.warn("General warning message.", GeneralWarning)
