@@ -18,7 +18,7 @@ def main() -> int:
             username='YOUR_USERNAME', 
             password='YOUR_PASSWORD'
         )
-        query = read_query_from_file('sql/queries/query1.sql')
+        query = read_query_from_file('sql/sample.sql')
         results = execute_sql(cnxn, query)
 
         if some_condition:  # ここに具体的な条件を設定
